@@ -1,0 +1,41 @@
+version: '3.8'
+
+services:
+  db:
+    image: mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: library
+      MYSQL_DATABASE: lib_db
+      MYSQL_USER: library
+      MYSQL_PASSWORD: library
+    ports:
+      - 3306:3306
+    volumes:
+      - ./db/db-data:/var/lib/mysql
+
+  back:
+    container_name: back
+    image: back
+    build:
+      context: ./library-back
+      dockerfile: Dockerfile
+    volumes:
+      - ./library-back/src:/app/src
+    ports:
+      - 8000:8000
+    depends_on:
+      - db
+
+  front:
+    container_name: front
+    image: front
+    build:
+      context: ./library-front
+      dockerfile: Dockerfile
+    volumes:
+      - ./library-front/src:/app/src
+    ports:
+      - 5173:5173
+    depends_on:
+      - back
