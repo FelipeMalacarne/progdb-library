@@ -29,7 +29,7 @@ VALUES
 
 
 -- INSERT books
-INSERT INTO books (title, author_id, stock_qnt)
+INSERT INTO books (title, author_id, status)
 VALUES 
     ('Lord of the Rings I', 1, 12), 
     ('Lord of the Rings II', 1, 15),
