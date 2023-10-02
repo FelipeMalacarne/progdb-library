@@ -1,18 +1,29 @@
 version: '3.8'
 
+networks:
+  app_lib:
+    driver: bridge
+
 services:
   db:
     image: mysql
     restart: always
+    command: --default-authentication-plugin=mysql_native_password
     environment:
-      MYSQL_ROOT_PASSWORD: library
       MYSQL_DATABASE: lib_db
+      MYSQL_ALLOW_EMPTY_PASSWORD: ok
+      MYSQL_ROOT_PASSWORD: library
       MYSQL_USER: library
       MYSQL_PASSWORD: library
+      MYSQL_ROOT_HOST: '%'
+    expose:
+      - "3306"
     ports:
       - 3306:3306
     volumes:
       - ./db/db-data:/var/lib/mysql
+    networks:
+      - app_lib
       
   back:
     container_name: back
@@ -20,12 +31,20 @@ services:
     build:
       context: ./library-back
       dockerfile: Dockerfile
+    environment:
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_USER: 'library'
+      DB_PASSWORD: 'library'
+      DB_NAME: 'lib_db'
     volumes:
       - ./library-back/src:/app/src
     ports:
       - 8000:8000
     depends_on:
       - db
+    networks:
+      - app_lib
 
   front:
     container_name: front
@@ -39,3 +58,5 @@ services:
       - 5173:5173
     depends_on:
       - back
+    networks:
+      - app_lib

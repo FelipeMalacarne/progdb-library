@@ -1,17 +1,21 @@
-import { Request, Response } from "express";
+import { Application } from "express";
+import express from 'express';
+import cors, { CorsOptions } from 'cors';
+import Routes from "./routes/Routes";
 
-const express = require('express');
-const dotenv = require('dotenv');
+export default class Server {
+  constructor(app: Application) {
+    this.config(app);
+    new Routes(app);
+  }
 
-dotenv.config();
+  private config(app: Application): void {
+    const corsOptions: CorsOptions = {
+      origin: "http://localhost:8000"
+    };
 
-const app = express();
-const port = process.env.PORT;
-
-app.get('/', (req: Request , res: Response) => {
-  res.send('Express + TypeScript Server');
-});
-
-app.listen(port, () => {
-  console.log(`[server]: Server is running at http://localhost:${port}`);
-});
+    app.use(cors(corsOptions));
+    app.use(express.json());
+    app.use(express.urlencoded({ extended: true }));
+  }
+}
