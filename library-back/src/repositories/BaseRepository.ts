@@ -46,7 +46,9 @@ export class BaseRepository<T extends RowDataPacket> implements Repository<T> {
 
         for (const [key, value] of Object.entries(snakeCaseSearchParams)) {
             if (value !== undefined) {
-                if (typeof value === "string") {
+                if (key == 'id'){
+                    conditions.push(`${key} = ${value}`);
+                } else if (typeof value === "string") {
                     conditions.push(`${key} LIKE '%${value}%'`);
                 } else {
                     conditions.push(`${key} = ${value}`);
