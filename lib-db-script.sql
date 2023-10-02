@@ -48,9 +48,7 @@ CREATE TABLE IF NOT EXISTS penalties (
     id INT AUTO_INCREMENT PRIMARY KEY,
     value DECIMAL(10,2) NOT NULL,
     paid BOOLEAN NOT NULL,
-    user_id INT NOT NULL,
     loan_id INT NOT NULL,
-    FOREIGN KEY (user_id) REFERENCES users(id),
     FOREIGN KEY (loan_id) REFERENCES loans(id)
 );
 
