@@ -1,12 +1,13 @@
 import { Connection, ResultSetHeader, RowDataPacket } from "mysql2";
 import { Repository } from "./Repository";
+import dbConn from "../db";
 
 export class BaseRepository<T extends RowDataPacket> implements Repository<T> {
     private connection: Connection;
     private tableName: string;
 
-    constructor(connection: Connection, tableName: string) {
-        this.connection = connection;
+    constructor(tableName: string) {
+        this.connection = dbConn;
         this.tableName = tableName;
     }
 
