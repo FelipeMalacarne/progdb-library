@@ -24,4 +24,4 @@ CALL register_user('felipe@teste.com', '123456', 'felipe', @created_user);
 SELECT @created_user;
 
 CALL authenticate_user('felipe@teste.com', '123456', @user_obj);
-SELECT @user_obj;
+SELECT @user_obj; 
