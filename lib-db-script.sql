@@ -1,5 +1,12 @@
 -- mysql setup script
 
+DROP TABLE IF EXISTS penalties;
+DROP TABLE IF EXISTS returns;
+DROP TABLE IF EXISTS loans;
+DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS books;
+DROP TABLE IF EXISTS authors;
+
  CREATE TABLE IF NOT EXISTS authors (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
@@ -19,11 +26,12 @@ CREATE TABLE IF NOT EXISTS books (
 );
 
 CREATE TABLE IF NOT EXISTS users (
-    id INT AUTO_INCREMENT PRIMARY KEY,
+    id INT AUTO_INCREMENT PRIMARY KEY ,
     name VARCHAR(255) NOT NULL,
     email VARCHAR(255) NOT NULL,
     password VARCHAR(255) NOT NULL,
-    role ENUM('customer', 'employee') NOT NULL DEFAULT 'customer'
+    role ENUM('customer', 'employee') NOT NULL DEFAULT 'customer',
+    UNIQUE KEY (email)
 );
 
 CREATE TABLE IF NOT EXISTS loans (
