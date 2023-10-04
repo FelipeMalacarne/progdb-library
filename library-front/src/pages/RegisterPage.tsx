@@ -20,7 +20,6 @@ export const RegisterPage = () => {
 
   const [error, setError] = useState<string | null>(null);
 
-
   const handleRegister = async () => {
     const url = 'http://localhost:8000/api/auth/register';
     const response = await fetch(url, {
