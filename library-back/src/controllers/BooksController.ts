@@ -7,7 +7,6 @@ export default class BooksController {
 
   async create(req: Request, res: Response): Promise<void> {
     const book: Book = req.body;
-
     if (!book.title || !book.edition || !book.status || !book.publicationDate || !book.publisher || !book.authorId) {
       res.status(400).json({ message: "Campos inválidos" });
       return;
@@ -19,19 +18,25 @@ export default class BooksController {
 
   async findAll(req: Request, res: Response): Promise<void> {
     const searchParams = req.query;
-    console.log(searchParams)
-    const books: Book[] = await repository.retrieveAll(searchParams);
+    try{
+      const books: Book[] = await repository.retrieveAll(searchParams);
+      res.json(books);
+    } catch (err: any) {
+      console.error(err);
+      res.status(500).json({ message: "Internal server error" });
+    }
 
-    res.json(books);
   }
 
   async findOne(req: Request, res: Response): Promise<void> {
     const bookId: number = parseInt(req.params.id);
-    const book: Book | undefined = await repository.retrieveById(bookId);
-    if (book) {
-      res.json(book);
-    } else {
-      res.status(404).json({ message: "Book not found" });
+    try{
+      const book: Book | undefined = await repository.retrieveById(bookId);
+      res.status(200).json(book);
+    }
+    catch (err: any) {
+      console.error(err);
+      res.status(500).json({ message: "Internal server error" });
     }
   }
 

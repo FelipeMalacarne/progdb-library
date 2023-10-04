@@ -1,10 +1,19 @@
+import { ImportContacts } from "@mui/icons-material"
+import { User } from "../Types"
+import { useNavigate } from "react-router-dom";
 
-export const Navbar = () => {
+interface navbarProps {
+  user: User | null;
+}
+
+export const Navbar: React.FC<navbarProps> = (props) => {
+  const nav = useNavigate();
   return (
     <div className="flex flex-col md:flex-row md:justify-between md:items-center bg-indigo-600 px-6 py-4 shadow sm:px-20">
       <div className="flex justify-between items-center">
-        <div>
-          <h1 className="text-2xl font-bold text-white md:text-3xl">Library</h1>
+        <div className="flex gap-3 justify-between items-center">
+          <ImportContacts className='text-white' sx={{ fontSize: 32 }} />
+          <h1 className="text-2xl font-bold text-white md:text-3xl">Biblioteca</h1>
         </div>
         <div className="md:hidden">
           <button type="button" className="block text-white hover:text-gray-700 focus:text-gray-700 focus:outline-none">
@@ -14,13 +23,28 @@ export const Navbar = () => {
           </button>
         </div>
       </div>
-      <div className="flex flex-col md:flex-row md:-mx-4 hidden md:block">
-        <a href="#" className="my-1 text-white hover:text-blue-500 md:mx-4 md:my-0">Home</a>
-        <a href="#" className="my-1 text-white hover:text-blue-500 md:mx-4 md:my-0">About</a>
-        <a href="#" className="my-1 text-white hover:text-blue-500 md:mx-4 md:my-0">Contact</a>
-        <a href="#" className="my-1 text-white hover:text-blue-500 md:mx-4 md:my-0">Login</a>
+      <div className="flex flex-col md:flex-row md:-mx-4 hidden md:block items-center justify-between">
+        <button className="my-1 text-white bg-indigo-600 hover:bg-indigo-700 hover:text-indigo-200 md:mx-4 md:my-0">Home</button>
+        <button className="my-1 text-white bg-indigo-600 hover:bg-indigo-700 hover:text-indigo-200 md:mx-4 md:my-0">About</button>
+        <button className="my-1 text-white bg-indigo-600 hover:bg-indigo-700 hover:text-indigo-200 md:mx-4 md:my-0">Contact</button>
+        <button className="my-1 text-white bg-indigo-600 hover:bg-indigo-700 hover:text-indigo-200 md:mx-4 md:my-0" 
+        onClick={() => {
+          localStorage.removeItem('user');
+          nav('/entrar');
+        }}
+        >
+          Logout
+        </button>
       </div>
+      {
+        props.user && (
+          <div className="flex flex-col md:flex-row md:-mx-4 hidden md:block items-center justify-between">
+            <div className="text-white md:mx-4 md:my-0">Olá, {props.user.name}</div>
+          </div>
+        )
+      }
+
     </div>
-    )
+  )
 
 }
