@@ -17,7 +17,6 @@ class BooksRouter {
         this.router.delete("/:id", this.controller.delete);
     }
 
-
 }
 
 export default new BooksRouter().router;

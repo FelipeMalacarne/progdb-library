@@ -4,9 +4,9 @@ export interface Book {
     title: string;
     edition: string;
     status: string;
-    publicationDate: Date;
+    publication_date: Date;
     publisher: string;
-    authorId: number;
+    author_id: number;
 }
 export interface Author {
     id: number;

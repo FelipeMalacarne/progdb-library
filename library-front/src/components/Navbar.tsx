@@ -24,12 +24,12 @@ export const Navbar: React.FC<navbarProps> = (props) => {
         </div>
       </div>
       <div className="flex flex-col md:flex-row md:-mx-4 hidden md:block items-center justify-between">
-        <button className="my-1 text-white bg-indigo-600 hover:bg-indigo-700 hover:text-indigo-200 md:mx-4 md:my-0">Home</button>
+        <button className="my-1 text-white bg-indigo-600 hover:bg-indigo-700 hover:text-indigo-200 md:mx-4 md:my-0">Inicio</button>
         <button className="my-1 text-white bg-indigo-600 hover:bg-indigo-700 hover:text-indigo-200 md:mx-4 md:my-0" 
         onClick={() => nav('/auth/autores')}
         >
           Autores</button>
-        <button className="my-1 text-white bg-indigo-600 hover:bg-indigo-700 hover:text-indigo-200 md:mx-4 md:my-0">Contact</button>
+        <button className="my-1 text-white bg-indigo-600 hover:bg-indigo-700 hover:text-indigo-200 md:mx-4 md:my-0" onClick={() => nav('/auth/livros')}>Livros</button>
         <button className="my-1 text-white bg-indigo-600 hover:bg-indigo-700 hover:text-indigo-200 md:mx-4 md:my-0" 
         onClick={() => {
           localStorage.removeItem('user');
