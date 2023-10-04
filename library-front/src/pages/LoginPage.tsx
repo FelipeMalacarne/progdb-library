@@ -92,6 +92,9 @@ export const LoginPage = () => {
             <div>
               <PrimaryButton text='Entrar' onClick={handleLogin} />
             </div>
+              <div className='justify-self-end text-blue-500 text-sm underline hover:cursor-pointer' onClick={() => nav('/registrar')}>
+                Não possui conta?
+              </div>
           </form>
         </div>
       </div>

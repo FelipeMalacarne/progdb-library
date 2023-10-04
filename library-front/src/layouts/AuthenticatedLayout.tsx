@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { Navbar } from "../components/Navbar"
-import { useNavigate } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import { User } from "../Types";
 
 export const AuthenticatedLayout = () => {
@@ -19,9 +19,11 @@ export const AuthenticatedLayout = () => {
   }, [])
 
   return (
-    <div className="flex min-h-full flex-1 flex-col justify-center">
+    <div className="flex flex-col h-screen">
       <Navbar user={user}/>
-      sas
+        <div className="h-full flex-1 bg-gray-100 overflow-auto">
+          <Outlet/>
+        </div>
     </div>
   )
 }

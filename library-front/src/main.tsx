@@ -8,6 +8,7 @@ import { LoginPage } from './pages/LoginPage.tsx'
 import { AuthenticatedLayout } from './layouts/AuthenticatedLayout.tsx'
 import { NotFoundPage } from './pages/NotFoundPage.tsx'
 import { RegisterPage } from './pages/RegisterPage.tsx'
+import { AuthorsPage } from './pages/AuthorsPage.tsx'
 
 const router = createBrowserRouter([
   {
@@ -30,6 +31,12 @@ const router = createBrowserRouter([
       {
         path: 'auth',
         element: <AuthenticatedLayout/>,
+        children: [
+          {
+            path: 'autores',
+            element: <AuthorsPage/>
+          },
+        ]
       },
     ]
   }

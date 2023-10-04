@@ -116,6 +116,9 @@ export const RegisterPage = () => {
             <div>
               <PrimaryButton text='Cadastrar' onClick={handleRegister} />
             </div>
+            <div className='justify-self-end text-blue-500 text-sm underline hover:cursor-pointer' onClick={() => nav('/entrar')}>
+                Já possui conta?
+              </div>
           </form>
         </div>
       </div>

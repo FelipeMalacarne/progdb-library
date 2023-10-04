@@ -15,7 +15,7 @@ BEGIN
     IF EXISTS (SELECT * FROM users WHERE email = auth_email AND password = hashed_password) THEN
         SELECT JSON_OBJECT('id', id, 'email', email, 'name', name) INTO user_obj FROM users WHERE email = auth_email AND password = hashed_password;
     ELSE
-        SELECT JSON_OBJECT('error', 'Invalid credentials') INTO user_obj;
+       SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Invalid credentials';
     END IF; 
 END;
 

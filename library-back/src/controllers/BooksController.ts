@@ -51,14 +51,18 @@ export default class BooksController {
       res.status(404).json({ message: "Book not found" });
     }
   }
-
   async delete(req: Request, res: Response): Promise<void> {
-    const bookId: number = parseInt(req.params.id);
-    const rowsAffected: number = await repository.delete(bookId);
-    if (rowsAffected > 0) {
-      res.json({ message: "Book deleted successfully" });
-    } else {
-      res.status(404).json({ message: "Book not found" });
+    try {
+      const bookId: number = parseInt(req.params.id);
+      const rowsAffected: number = await repository.delete(bookId);
+      if (rowsAffected > 0) {
+        res.json({ message: "Book deleted successfully" });
+      } else {
+        res.status(404).json({ message: "Book not found" });
+      }
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: "Internal server error" });
     }
   }
 
