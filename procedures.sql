@@ -1,4 +1,26 @@
--- Auth Procedures
+DELIMITER //
+CREATE PROCEDURE RegistrarEmprestimo(
+    IN book_id INT,
+    IN user_id INT,
+)
+
+BEGIN
+    DECLARE qnt INT;
+    DECLARE days_late INT;
+
+    SELECT stock_qnt INTO qnt FROM books WHERE id = book_id;
+
+    IF qnt > 0 THEN
+        INSERT INTO loans (book_id, user_id, lending_date, return_date)
+        VALUES (book_id, user_id, CURDATE(), CURDATE() + 7 );
+
+        UPDATE books SET stock_qnt = qnt - 1 WHERE id = book_id;
+    END IF;
+END;
+
+CALL RegistrarEmprestimo(1, 1);
+
+--AUTH PROCEDURES
 CREATE PROCEDURE register_user(IN email VARCHAR(255), IN password VARCHAR(255), IN name VARCHAR(255), OUT created_user JSON)
 BEGIN
     DECLARE hashed_password VARCHAR(255);
@@ -15,7 +37,7 @@ BEGIN
     IF EXISTS (SELECT * FROM users WHERE email = auth_email AND password = hashed_password) THEN
         SELECT JSON_OBJECT('id', id, 'email', email, 'name', name) INTO user_obj FROM users WHERE email = auth_email AND password = hashed_password;
     ELSE
-       SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Invalid credentials';
+        SELECT JSON_OBJECT('error', 'Invalid credentials') INTO user_obj;
     END IF; 
 END;
 
